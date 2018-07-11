@@ -27,7 +27,11 @@ return ".$val.";
             if ($oldLogo == $request->input("logo")) {
                 # code...
             }else{
-                unlink("./Uploads/sys/".$oldLogo);
+                if (file_exists("./Uploads/sys/".$oldLogo)) {
+                    unlink("./Uploads/sys/".$oldLogo);
+                }else{
+                    return back();
+                }
             }
             return back();
         }

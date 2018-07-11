@@ -32,19 +32,20 @@
 					</div>
 
 					<div class="panel-body">
-						<form action="">
+						<form action="/admin/check" method="post">
+							{{csrf_field()}}
 							<div class="input-group">
 								<span class="input-group-addon"> <span class="glyphicon glyphicon-user"></span></span>
-								<input type="text" class="form-control" placeholder="Username">
+								<input type="text" name="name" class="form-control" placeholder="Username">
 							</div>
 
 							<div class="input-group">
 								<span class="input-group-addon"> <span class="glyphicon glyphicon-lock"></span></span>
-								<input type="text" class="form-control" placeholder="Username">
+								<input type="password" name="pass" class="form-control" placeholder="Username">
 							</div>
 							<div class="input-group">
 								<span class="input-group-addon"> <span class="glyphicon glyphicon-lock"></span></span>
-								<input type="text" style="width: 50%" class="form-control" placeholder="请输入验证码">
+								<input type="text" name="code" style="width: 50%" class="form-control" placeholder="请输入验证码">
 								<img src="/admin/yzm" style="cursor: pointer;" onclick="this.src='/admin/yzm?'+Math.random()" alt="">
 							</div>
 

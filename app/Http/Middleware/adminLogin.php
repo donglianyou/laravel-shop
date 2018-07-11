@@ -16,11 +16,11 @@ class adminLogin
     public function handle($request, Closure $next)
     {
         // 判断是否登录
-        // if (session('lenovoAdminUserInfo')) {
+        if (session('lenovoAdminUserInfo')) {
             return $next($request);
-        // }else{
-            // return redirect('admin/login');
-        // }
+        }else{
+            return redirect('admin/login');
+        }
         
     }
 }

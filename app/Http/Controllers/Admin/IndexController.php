@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Artisan;
 // 后台首页控制器
 class IndexController extends Controller
 {
@@ -21,6 +21,7 @@ class IndexController extends Controller
         // 遍历并删除
         foreach ($arr as $key => $value) {
             if ($value !="." && $value !="..") {
+                Artisan::call("cache:clear");
                 unlink($path.'/'.$value);
             }
         }
@@ -28,7 +29,6 @@ class IndexController extends Controller
     // 清除缓存
     public function cache()
     {
-        $this->delDir("../storage/framework/cache"); // 删除数据缓存
         $this->delDir("../storage/framework/views"); // 删除模板缓存
         return redirect('admin');
     }

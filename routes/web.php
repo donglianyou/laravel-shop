@@ -18,12 +18,27 @@ Route::get('/', 'Home\IndexController@index');
 Route::get('/types/{id}', 'Home\TypesController@index');
 // 商品详情页面
 Route::get('/goods/{id}', 'Home\GoodsController@index');
-
+// 登录页面
+Route::get('/login', 'Home\LoginController@index');
+// 注册页面
+Route::get('/reg', 'Home\RegController@index');
+    // 处理注册操作
+    Route::post('/regCheck', 'Home\RegController@check');
+// 验证码
+Route::get('/yzm', 'Home\RegController@yzm');
+// 发送邮件
+Route::get('sendEmail', 'Home\RegController@sendEmail');
+// 激活地址
+Route::get('active/{id}/{token}', 'Home\RegController@active');
 // 后台路由
 // 后台登录页面
 Route::get('admin/login','Admin\LoginController@index');
 // 验证码
 Route::get('admin/yzm', 'Admin\LoginController@yzm');
+// 登录处理操作
+Route::post('admin/check', 'Admin\LoginController@check');
+// 后台退出
+Route::get('admin/logout', 'Admin\LoginController@logout');
 // 轮播图片上传
 Route::any('/admin/shangchuan', 'Admin\CommonController@upload');
 

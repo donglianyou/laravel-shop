@@ -44,8 +44,8 @@
             <span class="guo">0</span>
             </a>
           </li>
-          <li><a class="zc" href="javascript:;">注册</a><span class="gang">|</span></li>
-          <li><a class="dl"href="javascript:;">登陆</a><span class="gang">|</span></li>
+          <li><a class="zc" href="/reg">注册</a><span class="gang">|</span></li>
+          <li><a class="dl"href="/login">登陆</a><span class="gang">|</span></li>
         </ul> 
       </div>
    </div> 
@@ -63,7 +63,7 @@
    <!-- 搜索 -->
   <div class="container search">
      <div class="search-left">
-       <a href="http://www.lenovo.com.cn"><img src="/style/home/img/5.png" alt=""></a>
+       <a href="http://www.lenovo.com.cn"><img src="/Uploads/sys/{{config('web.logo')}}" alt=""></a>
      </div>
      <div class="search-right">
         <div class="fang">
