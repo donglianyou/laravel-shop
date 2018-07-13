@@ -40,12 +40,17 @@
      <div class="nav-right">
         <ul>
           <li>
-            <a style="position:relative" href="./shop.html">购物车 
+            <a style="position:relative" href="/car">购物车 
             <span class="guo">0</span>
             </a>
           </li>
-          <li><a class="zc" href="/reg">注册</a><span class="gang">|</span></li>
-          <li><a class="dl"href="/login">登陆</a><span class="gang">|</span></li>
+          <?php if(session("lenovoHomeUserInfo.id")): ?>
+            <li><a href="/logout">退出</a><span class="gang">|</span></li>
+            <li><a>欢迎您，<?php echo e(session("lenovoHomeUserInfo.name")); ?></a><span class="gang">|</span></li>
+          <?php else: ?>
+            <li><a class="zc" href="/reg">注册</a><span class="gang">|</span></li>
+            <li><a class="dl"href="/login">登陆</a><span class="gang">|</span></li>
+          <?php endif; ?>
         </ul> 
       </div>
    </div> 

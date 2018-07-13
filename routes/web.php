@@ -20,16 +20,31 @@ Route::get('/types/{id}', 'Home\TypesController@index');
 Route::get('/goods/{id}', 'Home\GoodsController@index');
 // 登录页面
 Route::get('/login', 'Home\LoginController@index');
+    // 处理登录页面
+    Route::post('/check', 'Home\LoginController@check');
+// 退出登录
+Route::get('/logout', 'Home\LoginController@logout');
+// 找回密码
+Route::any('/findPass', 'Home\LoginController@findPass');
+// 修改密码
+Route::any('/savePass/{id}/{token}', 'Home\LoginController@savePass');
 // 注册页面
 Route::get('/reg', 'Home\RegController@index');
     // 处理注册操作
     Route::post('/regCheck', 'Home\RegController@check');
+
 // 验证码
 Route::get('/yzm', 'Home\RegController@yzm');
 // 发送邮件
 Route::get('sendEmail', 'Home\RegController@sendEmail');
 // 激活地址
 Route::get('active/{id}/{token}', 'Home\RegController@active');
+
+// 购物车页面
+Route::get('/car', 'Home\CarController@index');
+// 加入购物车
+Route::get('/addCar', 'Home\CarController@addCar');
+
 // 后台路由
 // 后台登录页面
 Route::get('admin/login','Admin\LoginController@index');
@@ -41,6 +56,8 @@ Route::post('admin/check', 'Admin\LoginController@check');
 Route::get('admin/logout', 'Admin\LoginController@logout');
 // 轮播图片上传
 Route::any('/admin/shangchuan', 'Admin\CommonController@upload');
+
+
 
 Route::group(['prefix' => 'admin','namespace' => 'Admin','middleware' => 'adminLogin'], function() {
     // 后台首页路由
