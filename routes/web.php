@@ -44,7 +44,17 @@ Route::get('active/{id}/{token}', 'Home\RegController@active');
 Route::get('/car', 'Home\CarController@index');
 // 加入购物车
 Route::get('/addCar', 'Home\CarController@addCar');
-
+    // 购物车ajax调整数量
+    Route::post('CarAdd', 'Home\CarController@CarAdd');
+    Route::post('CarMinus', 'Home\CarController@CarMinus');
+    // 删除购物车
+    Route::post('CarDel', 'Home\CarController@CarDel');
+// 结算页面
+Route::post('accounts', 'Home\CarController@accounts');
+// 生成订单
+Route::post('/orders', 'Home\OrdersController@index');
+// 支付页面
+Route::get('pay/{code}', 'Home\OrdersController@pay');
 // 后台路由
 // 后台登录页面
 Route::get('admin/login','Admin\LoginController@index');

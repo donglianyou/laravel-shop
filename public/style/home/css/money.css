@@ -17,7 +17,7 @@ em{
 	font-style:normal;
 }
 .clear{
-	float:both;
+	clear:both;
 }
 /*头部*/
 .header {
@@ -33,6 +33,7 @@ em{
     margin: 0 auto;
     height: 100%;
 }
+
 .userinfo {
     float: right;
 }
@@ -88,7 +89,7 @@ a {
     border-top: solid 2px #e2231a;
     font-size: 13px;
     background:#eee;
-    height:124px;
+    /* height:124px; */
 }
 .info .con {
     margin: 20px 0 0;
@@ -165,7 +166,7 @@ a {
     float: left;
     padding: 10px 0;
     width: 100%;
-    display: none;
+    display:none;
 }
 /*支付方式*/
 .payment {
@@ -330,4 +331,7 @@ div.xinyka .fenqi-btn {
 }
 .ns_footer_line span {
     margin: 0 8px;
+}
+.show{
+    display:block;
 }

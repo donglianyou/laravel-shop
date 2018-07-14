@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>联想商城-结算中心</title>
-	<meta name="keywords" content="联想中国官网,联想电脑,联想服务器，联想官方网上商城" />
-	<meta name="description" content="联想官方网上商城,为您提供最新联想笔记本电脑,联想平板电脑,联想手机,联想台式机,联想一体电脑,联想服务器,联想外设数码产品,联想智能电视等产品在线购买及售后服务,您提供愉悦的网上购物体验" />
+    <title><?php echo e(config('web.title')); ?>_结算中心</title>
+  <meta name="keywords" content="<?php echo e(config('web.keywords')); ?>" />
+  <meta name="description" content="<?php echo e(config('web.description')); ?>" />
 	<link rel="shortcut icon" href="/style/home/img/1.png">
 	<link rel="stylesheet" href="/style/home/css/zhufu.css">
 	<script src="/style/home/js/jquery.js"></script>
@@ -12,80 +12,36 @@
 	<script src="/style/home/js/zhifu.js"></script>
 </head>
 <body>
-		<div class="top_box">
-    <div class="top_cont">
-
-        <div class="top_login_r top_red">
-		
-        </div>
-        <ul class="top_login top_red">
-
-            <li id="headorderID_a" style="">
-                <a href="http://order.lenovo.com.cn/center/orderlist.jhtm?merchantId=1">我的订单</a>
-            </li>
-
-            <li class="top_loginbtn" id="LoginID" style="display: none;">
-                <a href="javascript:void(0);" class="login">登录</a>
-            </li>
-            <li class="top_regist" id="RegisterID" style="display: none;">
-                <a href="javascript:void(0);" class="regist">注册</a>
-            </li>
-        </ul>
-
-        <div class="top_phone" style="" id="UserInfo">
-            <div class="top_phone_title"><span id="UserNameID">15364711138</span> <a href="#" class=" top_usepng top_downs"></a></div>
-            <ul>
-                <li><a href="http://i.lenovo.com.cn/info/center.jhtml?sts=e40e7004-4c8a-4963-8564-31271a8337d8">我的商城</a></li>
-                <li><a href="javascript:void(0);" id="LogOutID" class="logout">退出登录</a></li>
-            </ul>
-        </div>
-
-        <ul class="top_login top_red">
-            <!-- <li><a href="#">18101020964</a></li> -->
-            <li style="border-left:none;"><a href="http://www.lenovo.com.cn/">返回首页</a></li>
-        </ul>
-
-
-    </div>
-</div>
-
+<?php echo $__env->make("home.public.header1", array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 <div class="top_logob">
-    <img src="/style/home/img/pic-15.jpg" class="top_logob_imga">
+    <a href="/"><img src="/style/home/img/pic-15.jpg" class="top_logob_imga"></a>
     <img src="/style/home/img/pic-16.jpg" class="top_logob_imgb">
 </div>
+<form action="/orders" method="post">
+    <?php echo e(csrf_field()); ?>
+
 <div class="wrap" style="padding-top: 40px;">
 <div class="box-01">
     <div class="box-tl">
         <p>请填写并核对以下信息</p>
     </div>
     <div class="box-a" id="box-a">
-    	<p>收货信息：<span class="showbtn-SH showbtn new_p" ><span style="cursor:pointer;">＋新增收货地址</span>
+    	<p>收货信息：<span class="showbtn-SH showbtn new_p" ><span onclick="opens()" style="cursor:pointer;">＋新增收货地址</span>
     </span></p>
-    <div id="addressList-SH">  <input type="hidden" id="chooseid-SH"> 
+    <div id="addressList-SH">
+
+        <?php $__currentLoopData = $addr; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $site): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <p>
+                <input type="radio" checked name="aid" value="<?php echo e($site->id); ?>">
+                <span><?php echo e($site->sname); ?></span>
+                <span><?php echo e($site->stel); ?></span>
+                <span><?php echo e($site->addr); ?></span>
+                <span><?php echo e($site->addrInfo); ?></span>
+            </p>
+
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </div>
-    <div id="bg-SH" class="bg-n"></div><div style="display:none" class="box-SH box">
-    <input type="hidden" id="flag1-SH" value="0">
-    <input type="hidden" id="deliveridupdate-SH" value=""><a class="close" href="javascript:void(0);" >╳</a><ul><li><label><span>* </span>收货人：</label><input type="text" id="name-SH"><label id="alertName-SH" style="display:none;color:red">收货人不能为空</label>
-</li>
-    <li><label><span>* </span>手机：</label>
-    	<input type="text" id="mobile-SH">
-    	<label>  固定电话：</label>
-    	<input type="text" id="phone-SH"></li><li><label><span>* </span>地址：</label>
-    	<select id="goodsProvince-SH" name="goodsProvince-SH" onchange="getCities('SH')" style=" height:25px;width:120px"><option value="">省份</option>
-    	</select>
-    	<select id="goodsCity-SH" name="goodsCity-SH"  style=" height:25px;width:120px"><option value="">城市</option> </select>
-    	<select id="goodsCounty-SH" name="goodsCounty-SH" style=" height:25px;width:120px"><option value="">区/县</option></select></li><li><label><span>* </span>详细地址：</label><input type="text" style="width:410px;" id="goodsStreet-SH"></li><li><label>邮箱：</label><input type="text" id="mail-SH">
-    	<span style="color:red;vertical-align: middle;padding-left: 5px;">用来接收订单提醒邮件，便于您及时了解订单状态</span>
-    </li>
-    	<li>
-    		<label><input type="checkbox" style="width:14px;height:14px;margin-top: -8px;" id="isCheck-SH" >&nbsp;&nbsp;</label>设置为默认收货地址</li>
-    	<li>
-    		<label>
-    	</label>
-    	<button id="submitbtn-SH" >保存收货人信息</button>
-    </li>
-    </ul>
-    </div>
+    <div id="bg-SH" class="bg-n"></div>
     </div>
             <div class="box-b" id="box-b">
             	<p>支付方式：</p> 
@@ -95,10 +51,8 @@
              <img src="/style/home/img/pic-07.jpg" id="icon"> </div>
              <input id="presellflag" type="hidden" value="false">
         </div>
-                    
-<div class="box-c">
+<!-- <div class="box-c">
     <p class="c-p">发票信息&nbsp;<span style="font-family: '微软雅黑';font-size: 12px;line-height: 50px;color: red">(发票内容只能开明细，开增值税发票不赠送乐豆)</span>：</p>
-
     <div style="border:none;" class="box-ax">
         <input type="hidden" id="invoice_header" value="">
         <p>发票抬头：<span latag="latag_pc_ordersubmit_invoice" id="invoice_head">个人</span>
@@ -107,17 +61,14 @@
             <span style="cursor:pointer;" class="red showbtna">修改</span>
         </p>
     </div>
-    <!-- -----------------       个人普通发票          ----------------- -->
     <div id="bg"></div>
     <div id="fapinfoid" style="display: none; left: 104px; top: 633.4px;" class="boxa">
         <a class="close"href="#">╳</a>
-
         <div class="tm">
             <p>发票信息</p>
             <input id="VAT" type="hidden">
             <input id="notices" type="hidden" value="">
             <input id="invoicestatus" type="hidden" value="">
-            <!-- <p>修改</p> -->
             <img src="http://m1.lefile.cn/trade/pc/images/pic-08.jpg">
         </div>
         <ul style="margin-left: 17px">
@@ -270,71 +221,50 @@
         </div>
 
     </div>
-</div>
+</div> -->
 
 <div class="box-d" id="box-d" style="display:none">
 </div>
 
 <div class="box-02" id="productList">
-    <div class="box-tl"><p><a href="getcart.jhtm" latag="latag_pc_ordersubmit_backtocart">返回购物车修改&gt;</a>确认商品</p>
+    <div class="box-tl"><p><a href="/car" latag="latag_pc_ordersubmit_backtocart">返回购物车修改&gt;</a>确认商品</p>
 </div>
 <div class="box-ls" style="margin-bottom: -20px;">
     <p class="tl-a">&nbsp;</p><p class="tl-b">商品名称</p>
 <p class="tl-c">单价</p><p class="tl-d">数量</p>
-<p class="tl-e">金额</p></div><div class="divide" style="margin-top: 20px;border-bottom: 1px solid #d9d8d6;">
+<p class="tl-e">金额</p></div>
+<div class="divide" style="margin-top: 20px;border-bottom: 1px solid #d9d8d6;">
 </div>
+<?php
+    $tot = 0;
+?>
+<?php $__currentLoopData = $newShop; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $shop): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 <div class="list" id="52771" style="border-bottom: none;">
+    <input type="hidden" name="ids[]" value="<?php echo e($shop['id']); ?>">
+    <input type="hidden" name="nums[]" value="<?php echo e($shop['num']); ?>">
+    <input type="hidden" name="prices[]" value="<?php echo e($shop['goodsInfo']->price); ?>">
     <p class="list-a">
-    <a href="http://thinkpad.lenovo.com.cn/product/52771.html">
-    <img src="http://p3.lefile.cn/product/adminweb/2016/07/07/Vn0SBIp6FIOJfUeKoTSaLeSlz-6915.w90.jpg"></a>
-</p>
-<p class="list-b">
-    <a href="http://thinkpad.lenovo.com.cn/product/52771.html">ThinkPad 黑将S5 20G4A00MCD 黑色&nbsp;[S5 i7 4G 1TB 黑色 ]</a>
-</p>
-    <p class="list-c">8499.00</p>
-<p class="list-d">1</p>
-<p class="list-e">8499.00</p>
+        <a href="/goods/<?php echo e($shop['id']); ?>"><img title="<?php echo e($shop['goodsInfo']->title); ?>" src="/Uploads/goods/<?php echo e($shop['goodsInfo']->img); ?>" width="110px" height="110px"></a>
+    </p>
+    <p class="list-b">
+        <a href="/goods/<?php echo e($shop['id']); ?>" title="<?php echo e($shop['goodsInfo']->title); ?>"><?php echo e($shop['goodsInfo']->title); ?></a>
+    </p>
+    <p class="list-c"><?php echo e($shop['goodsInfo']->price); ?></p>
+    <p class="list-d"><?php echo e($shop['num']); ?></p>
+    <?php
+        $money = $shop['goodsInfo']->price * $shop['num'];
+        $tot +=$money;
+    ?>
+    <p class="list-e"><?php echo e($money); ?></p>
 </div>
-<div class="box-ltx db_back" id="dr52771">
-    <p class="list-aa">
-    <span style="color:red;">数据恢复险：</span><i class="i_checkbox" onclick="dataRecoveryClick(this,'52771','52771')">
-</i><a href="http://www.lenovo.com.cn/product/53287.html">原价199元,活动价<span style="color:red;">29.90</span>元,软件数据恢复服务（远程，1年有效期）</a>
-<b>
-    <i class="i_title" style="display: none;">
-    <span class="db_body">针对联想出厂PC出现因软件原因导致的数据丢失，提供软件数据恢复服务（远程），1年有效期</span>
-</i>
-<span class="jiao1" style="display: none;">
-</span>
-<span class="jiao2" style="display: none;">
-</span>
- <img class="title_img" 
- onmouseover="title_imgShow(this)" onmouseout="title_imgHide(this)" src="/style/home/img/title.png"></b></p><p class="list-c">29.90</p><p class="list-d">1</p><p class="list-e">29.90</p></div></div>
-<div id="cto_personal" style="display: none;">
-    <div class="dsix_boxg_cont personal">
-        <div class="personal_title personal_config" style="border:1px solid #d9d8d6;">个性化配置信息<b>▼</b><b style="display:none">▲</b></div>
-        <div class="config_table_box">
-            <table class="config_table" width="100%" cellpadding="0" cellspacing="0">
-            </table>
-        </div>
-    </div>
-    <div class="dsix_boxg_cont personal">
-        <div class="personal_title">个性定制－A面定制图片信息<b>▼</b><b style="display:none">▲</b></div>
-        <div class="personal_body" id="personal_imga">
-        </div>
-    </div>
-    <div class="dsix_boxg_cont personal">
-        <div class="personal_title">个性定制－C面定制文字信息<b>▼</b><b style="display:none">▲</b></div>
-        <div class="personal_body clearfix" id="pagec_char">
-        </div>
-    </div>
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </div>
-
     <div class="box-03" id="discount" style="display:block">
     <div class="box-tl">
         <p>优惠信息<span style="color: red;font-size: 15px;" id="tipsinfo">&nbsp;&nbsp;&nbsp;温馨提示：您优惠券、优惠码使用过程中，有任何问题请联系客服</span></p>
     </div>
     <!-- --------------使用优惠券 --------------- -->
-    <div class="message" id="couponlist">
+    <!-- <div class="message" id="couponlist">
              <input type="hidden" id="selectedCoupon" value="">
         <p class="menuTitle yh">
             <a href="javascript:;">
@@ -351,10 +281,9 @@
         </div>
         <div class="msg-b"></div>
     </div>
-
-    </div>
+    </div> -->
   <!-- --------------使用内购额度------------- -->
-    <div class="dou" id="innerlimitmoney" style="display:none">
+    <!-- <div class="dou" id="innerlimitmoney" style="display:none">
     <p class="menuTitle">
         <a href="javascript:;" class=""></a>
         <span class="red">使用内购额度</span>（用户总内购额度<label class="red" id="userCanuseInnerBuy">0</label> 元）</p>
@@ -379,7 +308,7 @@
                                         </p>
         </div>
     </div>
-</div>
+</div> 
 <div class="dou" style="display: block;" id="happyBeanNum">
             <p class="menuTitle"><a href="javascript:;" class=""></a><span class="red">使用乐豆</span>（总乐豆数量<label class="red" id="LeDouTotalCount">300</label>个）</p>
             <div class="dous menuContent" style="display: none;">
@@ -393,48 +322,71 @@
                     </p>
                                     </div>
             </div>
-        </div>
+        </div> -->
 
 
 </div>
 </div>
-   <div class="box-04">
-    <div class="box-tl">
-        <p>订单备注</p>
-    </div>
-    <div class="dan">
-        <p>客服经理编码：<input type="text" id="managercode" placeholder="如果您联系过客服，可以填写其编码"></p>
-    </div>
-    <div class="dans">
-        <p style="padding-right: 36px">订单备注:</p>
-        <textarea id="ordermark" placeholder="告诉我您的特殊要求,限150字"></textarea>
-    </div>
+<!--    <div class="box-04">
+ <div class="box-tl">
+     <p>订单备注</p>
+ </div>
+ <div class="dan">
+     <p>客服经理编码：<input type="text" id="managercode" placeholder="如果您联系过客服，可以填写其编码"></p>
+ </div>
+ <div class="dans">
+     <p style="padding-right: 36px">订单备注:</p>
+     <textarea id="ordermark" placeholder="告诉我您的特殊要求,限150字"></textarea>
+ </div>
 </div>
   ﻿
 <div style="text-align:right;" id="agree_condition">
-	  	   <span id="lenovocondition">
-            <input type="checkbox" name="isagreed" id="isagreed" checked="checked" latag="latag_pc_odersubmit_agree">
-            <a target="_blank" href="turnB2C.jhtm" latag="latag_pc_odersubmit_turnb2c">我同意  《联想产品网络销售通用条款和条件》</a>
-       </span>
-          
-</div>
+             <span id="lenovocondition">
+         <input type="checkbox" name="isagreed" id="isagreed" checked="checked" latag="latag_pc_odersubmit_agree">
+         <a target="_blank" href="turnB2C.jhtm" latag="latag_pc_odersubmit_turnb2c">我同意  《联想产品网络销售通用条款和条件》</a>
+    </span>
+       
+</div> -->
 
     <div class="box-06 clearfix" id="discountinfo" style="display: block;">
-    <p><span>商品总价：<em style="color: #e2231a;font-weight: bold;font-style: normal;" id="totalPrice">￥8499.00</em>元</span></p>
-    <p id="p_restPrice" style="display: none;"><span>尾款金额：<em id="finalPrice" style="color: #e2231a;font-weight: bold;font-style: normal;">￥0</em>元</span></p>
-     <span id="pricesubmit" style="display: block;">
-		<p><span>折扣抵减：<em id="totaldiscount" style="color: #e2231a;font-weight: bold;font-style: normal;">￥0.00</em>元</span></p>
-        <p><span>优惠券抵减：<em id="youhuij" style="color: #e2231a;font-weight: bold;font-style: normal;">￥0.00</em> 元</span></p>
-	 </span>
-    <p id="p_payDeposit" style="display: none;"><span>应付定金：<em id="payDeposit" style="color: #e2231a;font-weight: bold;font-style: normal;">￥0</em>元</span></p>
-    <p id="tiptext" style="display: none;"><span style="color:red">(预售商品优惠冲抵尾款,定金不予退还)</span></p>
-	<p id="p_freight" style="display: block;"><span>运费：<em style="color: #e2231a;font-weight: bold;font-style: normal;" id="freight">￥0.00</em>元</span></p>
-    <p id="p_paymoney" style="display: block;"><span>应付总额：<em id="paymoney" style="color: #e2231a;font-weight: bold;font-style: normal;">￥8499.00</em>元</span></p>
+    <p><span>商品总价：<em style="color: #e2231a;font-weight: bold;font-style: normal;" id="totalPrice"><?php echo e($tot); ?></em>元</span></p>
     <p id="submitbutton" style="margin-bottom: 15px;"><button style="font-size: 18px;cursor: pointer;margin-top: 2px;">提交订单</button></p>
 </div>
 <div id="orderformDiv"></div>
 
 </div>
+</form>
+    <div style="display:none" id="addAddr" class="box-SH box">
+    <input type="hidden" id="flag1-SH" value="0">
+    <input type="hidden" id="deliveridupdate-SH" value=""><a class="close" onclick="closes()" href="javascript:void(0);" >╳</a>    <ul>
+        <li><label><span>* </span>收货人：</label><input type="text" id="name-SH"><label id="alertName-SH" style="display:none;color:red">收货人不能为空</label></li>
+        <li><label><span>* </span>手机：</label>
+            <input type="text" id="mobile-SH">
+            <label>  固定电话：</label>
+            <input type="text" id="phone-SH"></li><li><label><span>* </span>地址：</label>
+            <select id="goodsProvince-SH" name="goodsProvince-SH" onchange="getCities('SH')" style=" height:25px;width:120px"><option value="">省份</option>
+            </select>
+            <select id="goodsCity-SH" name="goodsCity-SH"  style=" height:25px;width:120px"><option value="">城市</option> </select>
+            <select id="goodsCounty-SH" name="goodsCounty-SH" style=" height:25px;width:120px"><option value="">区/县</option></select></li><li><label><span>* </span>详细地址：</label><input type="text" style="width:410px;" id="goodsStreet-SH"></li><li><label>邮箱：</label><input type="text" id="mail-SH">
+            <span style="color:red;vertical-align: middle;padding-left: 5px;">用来接收订单提醒邮件，便于您及时了解订单状态</span>
+        </li>
+        <li>
+            <label><input type="checkbox" style="width:14px;height:14px;margin-top: -8px;" id="isCheck-SH" >&nbsp;&nbsp;</label>设置为默认收货地址</li>
+        <li>
+            <label>
+        </label>
+        <button id="submitbtn-SH" >保存收货人信息</button>
+    </li>
+    </ul>
+    </div>
+<script type="text/javascript">
+        function opens() {
+            $("#addAddr").show();
+        }
+        function closes() {
+            $("#addAddr").hide();
+        }
+    </script>
  <div class="footer">
    <img src="/style/home/img/99999.png" alt="">
 

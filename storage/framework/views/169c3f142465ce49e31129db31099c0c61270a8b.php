@@ -25,6 +25,9 @@
       <input type="checkbox" class="selectAll">
      <span>全选</span></div>
     </div>
+    <form action="/accounts" method="post">
+        <?php echo e(csrf_field()); ?>
+
     <div class="bc_table" id="main_table">
         <table cellpadding="0" cellspacing="0">
             <tbody>
@@ -39,7 +42,6 @@
         	</tbody>
         </table>
         <table cellpadding="0" cellspacing="0">
-    		
             <!--带服务-->
              <tbody>
                 <?php
@@ -48,11 +50,11 @@
                 <?php $__currentLoopData = $shop; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $car): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr class=" active" gcode="52770" stock="18">
                     <td width="57" class="bc_table_sel">
-                        <input type="checkbox" name="checkbox" />
+                        <input type="checkbox" name="goods[]" value="<?php echo e($car['id']); ?>" />
                     </td>
                     <td width="148" class="bc_table_img">
                         <a href="/goods/<?php echo e($car['id']); ?>" target="_blank">
-                                 <img src="/Uploads/goods/<?php echo e($car['goodsInfo']->img); ?>" alt="">
+                            <img src="/Uploads/goods/<?php echo e($car['goodsInfo']->img); ?>" alt="">
                         </a>
                         <div class="bc_zhezhao"></div>
                     </td>
@@ -66,9 +68,9 @@
                      </td>
                     <td width="152" text-align:center>
                         <label class="i_box clearfix">
-                            <input class="pro_less J_minus" ids="<?php echo e($car['goodsInfo']->id); ?>" type="button" value="-">
+                            <input class="pro_less J_minus" money="<?php echo e($car['goodsInfo']->price); ?>" ids="<?php echo e($car['goodsInfo']->id); ?>" type="button" value="-">
                             <input class="pro_num J_input" type="text" value="<?php echo e($car['num']); ?>" style="ime-mode: disabled;" val="<?php echo e($car['num']); ?>">
-                            <input class="pro_add J_add" ids="<?php echo e($car['goodsInfo']->id); ?>" type="button" value="+">
+                            <input class="pro_add J_add" money="<?php echo e($car['goodsInfo']->price); ?>" ids="<?php echo e($car['goodsInfo']->id); ?>" type="button" value="+">
                         </label>
                     </td>
                     <?php
@@ -77,26 +79,12 @@
                     ?>
                     <td width="152" class="bc_red"><?php echo e($money); ?></td>
                     <td width="117" style="text-align:left">
-                        <a href="javascript:;" style="color: #000" title="删除" onclick="deleline('52770')" latag="latag_pc_shopcart_delete_52770">删除</a>
+                        <a href="javascript:;" style="color: #000" title="删除" onclick="deleline(this,<?php echo e($car['goodsInfo']->id); ?>)">删除</a>
                                                 <br>
                             <a href="javascript:;" style="color: #000" title="收藏" onclick="conllectionFun('52770')">移入收藏夹</a>
                     </td>
                 </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                <script>
-                    $(".J_minus").click(function(){
-                        num = $(this).next().val();
-                        num = Number(num);
-                        $(this).next().val(--num);
-                        id = $(this).attr("ids");
-                    });
-                      $(".J_add").click(function(){
-                        num = $(this).prev().val();
-                        num = Number(num);
-                        $(this).prev().val(++num);
-                        id = $(this).attr("ids");
-                      });
-                </script>
         </tbody>
     </table>
     </div>
@@ -104,21 +92,93 @@
         <div class="bc_num_fl">
             <div class="bc_all clearfix active">
         <input type="checkbox" name="checkbox" class="selectAll" />
-
                 <span>全选</span></div>
             <a href="javascript:;" class="bc_num_del">删除选中商品</a>
         </div>
         <ul class="bc_num_fr">
-         <!--    <li style="margin-top:0;">商品总价：7499.00 元</li>
-            <li>优惠节省：500.00 元</li> -->
-            <li>合计：<span class="bc_red" id="totalmoneyf"><?php echo e($tot); ?> 元</span></li>
+            <li>合计：<span class="bc_red" id="totalmoneyf"><span id="heji"><?php echo e($tot); ?></span> 元</span></li>
+            <div class="bc_probtn clearfix">
+                <input type="submit" name="" value="去结算" style="background: red; width:120px;height: 40px; text-align:center;color: #fff;font-weight: bold; border: none; cursor:pointer; border-radius: 8px; float: right;">
+            </div>
         </ul>
     </div>
-    <div class="bc_probtn clearfix"><a href="./zhifu.html" title="去结算" id="submit" event-name="PC端_去结算">去结算</a></div>
-    </div>
+</div>
+</form>
 <?php else: ?>
     <a href="/">购物车空空如也，请购物！</a>
 <?php endif; ?>
+<script>
+    // 删除方法
+    function deleline(obj,id) {
+        $.post("/CarDel",{"id":id,"_token":"<?php echo e(csrf_token()); ?>"},function(data){
+            if (data) {
+                // 购物车移除对应商品
+                $(obj).parent().parent().remove();
+                // 合计
+                tot = Number($("#heji").html());
+                money = $(obj).parent().prev().html();
+                money = Number(money);
+                tot = tot - money;
+                $("#heji").html(tot);
+            }
+        });
+    }
+    // 加数量
+      $(".J_add").click(function(){
+        // 获取商品的id
+        id = $(this).attr("ids");
+        obj = $(this);
+        // 发送ajax请求
+        $.post("/CarAdd",{"id":id,"_token":"<?php echo e(csrf_token()); ?>"},function(data){
+            if (data) {
+                // js修改输入框的数量
+                num = obj.prev().val();
+                num = Number(num);
+                obj.prev().val(++num);
+                // 获取商品价格
+                price = Number(obj.attr('money'));
+                // 让小计发生改变
+                money = obj.parent().parent().next().html();
+                money = Number(money) + price;
+                obj.parent().parent().next().html(money);
+                // 合计
+                tot = Number($("#heji").html());
+                tot = tot + price;
+                $("#heji").html(Number(tot));
+            }
+        });
+      });
+    // 减数量
+    $(".J_minus").click(function(){
+        // 获取商品的id
+        id = $(this).attr("ids");
+        obj = $(this);
+        // 发送ajax请求
+        $.post("/CarMinus",{"id":id,"_token":"<?php echo e(csrf_token()); ?>"},function(data){
+            if (data) {
+                // js修改输入框的数量
+                num = obj.next().val();
+                num = Number(num);
+                if (num<=1) {
+                    num = 1;
+                }else{
+                    obj.next().val(--num);
+                    // 获取商品价格
+                    price = Number(obj.attr('money'));
+                    // 让小计发生改变
+                    money = obj.parent().parent().next().html();
+                    money = Number(money) - price;
+                    obj.parent().parent().next().html(money);
+                    // 合计
+                    tot = Number($("#heji").html());
+                    tot = tot - price;
+                    $("#heji").html(tot);
+                }
+
+            }
+        });
+    });
+</script>
 <div class="bc_prolist" id="bc_prolist"><h3>
         <span>买了又买</span>
         <a  href="javascript:void(0);"><span class="lft-btn"></span></a>

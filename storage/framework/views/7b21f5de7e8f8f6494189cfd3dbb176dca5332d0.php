@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>联想商城-收银台</title>
-	<meta name="keywords" content="联想中国官网,联想电脑,联想服务器，联想官方网上商城" />
-	<meta name="description" content="联想官方网上商城,为您提供最新联想笔记本电脑,联想平板电脑,联想手机,联想台式机,联想一体电脑,联想服务器,联想外设数码产品,联想智能电视等产品在线购买及售后服务,您提供愉悦的网上购物体验" />
+	<title><?php echo e(config('web.title')); ?>_收银台</title>
+      <meta name="keywords" content="<?php echo e(config('web.keywords')); ?>" />
+      <meta name="description" content="<?php echo e(config('web.description')); ?>" />
 	<link rel="shortcut icon" href="/style/home/img/1.png">
 	<link rel="stylesheet" href="/style/home/css/money.css">
 	<script src="/style/home/js/jquery.js"></script>
@@ -88,13 +88,13 @@
                 <div class="money">
                     <p>应付金额：<span class="total">6699元</span></p>
                     <a class="show_more" href="javascript:void(0)">
-                    	<span style="float:right;">订单详情</span>
+                    	<span style="float:right;" id="details">订单详情</span>
                     	<em id="em_order_detail" class="down"></em>
                     </a>
                 </div>
             
             </div>
-            <div class="more clear">
+            <div class="more clear" id="moredet">
                 <ul class="address" id="address"> 
                 <li >收货信息：<span>张三 182****1110 北京_北京_昌平_天安门</span>
                 </li>
@@ -103,10 +103,20 @@
                 <li>发票信息：<span>个人</span></li></ul>
             </div>
         </div>
+    <div class="clearfix"></div>
     </div>
     <div class="clear"></div>
 </div>
-
+<script>
+$("#details").click(function(){
+    if($('#moredet').is(':hidden')){//如果当前隐藏
+        $('#moredet').show();
+    }else{
+        $('#moredet').hide();
+    }
+})
+</script>
+<div class="clear"></div>
 <div class="payment">
 <div class="title">请选择支付方式</div>
 <div class="pay_types" id="pay_types">
